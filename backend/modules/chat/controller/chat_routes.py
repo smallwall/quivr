@@ -77,7 +77,7 @@ def get_answer_generator(
         brain_id, chat_question.question, current_user, chat_id, history, vector_store
     )
 
-    send_telemetry("question_asked", {"model_name": brain.model})
+    # send_telemetry("question_asked", {"model_name": brain.model})
 
     gpt_answer_generator = chat_instance.get_answer_generator(
         brain=brain,

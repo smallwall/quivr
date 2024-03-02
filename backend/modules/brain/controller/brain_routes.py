@@ -109,7 +109,7 @@ async def create_new_brain(
             status_code=429,
             detail=f"Maximum number of brains reached ({user_settings.get('max_brains', 5)}).",
         )
-    send_telemetry("create_brain", {"brain_name": brain.name})
+    # send_telemetry("create_brain", {"brain_name": brain.name})
     new_brain = brain_service.create_brain(
         brain=brain,
         user_id=current_user.id,

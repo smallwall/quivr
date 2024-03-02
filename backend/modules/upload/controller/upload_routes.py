@@ -56,7 +56,7 @@ async def upload_file(
     user_settings = user_daily_usage.get_user_settings()
 
     remaining_free_space = user_settings.get("max_brain_size", 1000000000)
-    send_telemetry("upload_file", {"file_name": uploadFile.filename})
+    # send_telemetry("upload_file", {"file_name": uploadFile.filename})
     file_size = get_file_size(uploadFile)
     if remaining_free_space - file_size < 0:
         message = f"Brain will exceed maximum capacity. Maximum file allowed is : {convert_bytes(remaining_free_space)}"

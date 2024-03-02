@@ -200,6 +200,25 @@ def process_integration_brain_sync():
             )
 
 
+@celery.task
+def knowledge():
+    integration = IntegrationBrain()
+    integrations = integration.get_integration_brain_by_type_integration("notion")
+
+    time = datetime.now(timezone.utc)  # Make `time` timezone-aware
+    # last_synced is a string that represents a timestampz in the database
+    # only call process_integration_brain_sync_user_brain if more than 1 day has passed since the last sync
+    for integration in integrations:
+        print(f"last_synced: {integration.last_synced}")  # Add this line
+        last_synced = datetime.strptime(
+            integration.last_synced, "%Y-%m-%dT%H:%M:%S.%f%z"
+        )
+        if last_synced < time - timedelta(hours=12):
+            process_integration_brain_sync_user_brain.delay(
+                brain_id=integration.brain_id, user_id=integration.user_id
+            )
+
+
 celery.conf.beat_schedule = {
     "remove_onboarding_more_than_x_days_task": {
         "task": f"{__name__}.remove_onboarding_more_than_x_days_task",

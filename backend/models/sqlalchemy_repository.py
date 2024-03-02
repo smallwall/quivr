@@ -71,3 +71,20 @@ class ApiKey(Base):
     deleted_time = Column(DateTime, nullable=True)
 
     user = relationship("User")
+
+class KnowledgeStream(Base):
+    __tablename__ = "knowledge_stream"
+
+    key_id = Column(String, primary_key=True, default=lambda: str(uuid4()))
+    stream_name = Column(String, nullable=False)
+    brain_ids = Column(String)
+    stream_type = Column(String)  # pull / push
+    stream_subtype = Column(String)  # http, kafka, database
+    stream_parent = Column(String)
+    stream_description = Column(String)
+    stream_schedule = Column(String)
+    knowledge_update_method = Column(String)  # merge / overwrite / mix
+    knowledge_learning_prompt = Column(String)
+    last_execute_date = Column(DateTime)
+    deleted = Column(Boolean, default=False)
+
